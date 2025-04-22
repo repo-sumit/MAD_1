@@ -65,10 +65,11 @@ Admin:
   Create Subject → Add Chapter → Add Quiz → Add Questions
 User:
   Browse → Attempt Quiz → View Results & Past Scores
+```
+## ⚙️ Installation Guide
+## 🐍 Prerequisites
+```plaintext
 
-
-⚙️ Installation Guide
-🐍 Prerequisites
 Python 3.8+
 
 pip
