@@ -2,8 +2,6 @@
 
 **Quiz Master** is a powerful, full-stack Flask web application that allows administrators to create and manage subject-wise quizzes while enabling users (students) to take them, track their scores, and view performance insights. It's a modular quiz platform ideal for academic institutions and online learning environments.
 
-![Quiz Master Banner](https://imgur.com/y3hKf1K.png)
-
 ---
 
 ## 🚀 Features
@@ -51,6 +49,7 @@ erDiagram
     Subject ||--o{ Chapter : contains
     Chapter ||--o{ Quiz : contains
     Quiz ||--o{ Score : evaluated_in
+
     User {
         int id
         string username
@@ -63,12 +62,12 @@ erDiagram
     Subject {
         int id
         string name
-        text description
+        string description
     }
     Chapter {
         int id
         string name
-        text description
+        string description
         int subject_id
     }
     Quiz {
@@ -76,16 +75,16 @@ erDiagram
         string title
         string date_of_quiz
         string time_duration
-        text remarks
+        string remarks
         int chapter_id
     }
     Question {
         int id
-        text question_statement
-        text option1
-        text option2
-        text option3
-        text option4
+        string question_statement
+        string option1
+        string option2
+        string option3
+        string option4
         int correct_option
         int quiz_id
     }
