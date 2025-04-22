@@ -67,7 +67,7 @@ User:
   Browse → Attempt Quiz → View Results & Past Scores
 ```
 ## ⚙️ Installation Guide
-## 🐍 Prerequisites
+# 🐍 Prerequisites
 ```plaintext
 
 Python 3.8+
