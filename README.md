@@ -43,63 +43,11 @@
 The system is built on a relational schema as follows:
 
 ```mermaid
-erDiagram
-    User ||--o{ Score : has
-    Quiz ||--o{ Question : includes
-    Subject ||--o{ Chapter : contains
-    Chapter ||--o{ Quiz : contains
-    Quiz ||--o{ Score : evaluated_in
 
-    User {
-        int id
-        string username
-        string password
-        string full_name
-        string qualification
-        string dob
-        bool is_admin
-    }
-    Subject {
-        int id
-        string name
-        string description
-    }
-    Chapter {
-        int id
-        string name
-        string description
-        int subject_id
-    }
-    Quiz {
-        int id
-        string title
-        string date_of_quiz
-        string time_duration
-        string remarks
-        int chapter_id
-    }
-    Question {
-        int id
-        string question_statement
-        string option1
-        string option2
-        string option3
-        string option4
-        int correct_option
-        int quiz_id
-    }
-    Score {
-        int id
-        int user_id
-        int quiz_id
-        int score
-        int total_questions
-        datetime timestamp
-    }
 # MAD_1
 
 ## 📈 Dashboard Preview (Admin)
-
+https://i.ibb.co/rGkL5YzR/Untitled-diagram-2025-04-22-071529.png
 +-------------------------------------------------------------+
 |                   Admin Dashboard                           |
 +----------------+----------------+----------------+----------+
