@@ -1,77 +1,158 @@
-# 🧠 Quiz Master - MAD 1
+# 🎓 Quiz Master - Modular Quiz Management System
 
-**Quiz Master** is a powerful, full-stack Flask web application that allows administrators to create and manage subject-wise quizzes while enabling users (students) to take them, track their scores, and view performance insights. It's a modular quiz platform ideal for academic institutions and online learning environments.
+Quiz Master is a robust full-stack **Flask** web application designed for educational institutions and e-learning platforms to create, manage, and evaluate quizzes with hierarchical structuring by **Subjects → Chapters → Quizzes → Questions**.
+
+![Admin Dashboard](https://i.ibb.co/rGkL5YzR/Untitled-diagram-2025-04-22-071529.png)
 
 ---
 
-## 🚀 Features
+## 🚀 Key Features
 
-### 👨‍🏫 Admin Capabilities
-- Full CRUD for:
+### 🛠 Admin Panel
+- Full **CRUD operations**:
   - Subjects
-  - Chapters within subjects
-  - Quizzes within chapters
-  - Questions within quizzes
-- Dashboard overview with statistics
-- View and analyze scores of all users
+  - Chapters
+  - Quizzes
+  - Questions
+- Dynamic dashboard with:
+  - Quiz statistics
+  - Top user performance
+- Modal-based entity creation (without page reloads)
 
-### 👩‍🎓 User Features
-- Register & login securely
-- Browse subjects and quizzes
-- Attempt quizzes and view results
-- Track previous scores and quiz attempts
-
-### 🔐 Authentication
-- Passwords are securely hashed using `werkzeug.security`
-- Admin and user roles with session-based access control
+### 👨‍🎓 User Portal
+- Secure **Registration/Login**
+- Explore subjects and quizzes
+- Attempt quizzes with auto-scoring
+- View **historical performance** and quiz attempts
 
 ---
 
-## 🛠️ Tech Stack
+## 🧰 Tech Stack
 
-| Layer         | Technology                            |
-|---------------|----------------------------------------|
-| Backend       | Python, Flask                         |
-| Database      | SQLite3, SQLAlchemy ORM               |
-| Frontend      | HTML, CSS (Jinja templates)           |
-| Security      | Werkzeug Password Hashing             |
+| Layer         | Technology                 |
+|--------------|----------------------------|
+| Backend       | Python + Flask             |
+| ORM & DB      | SQLAlchemy + SQLite3       |
+| Templates     | Jinja2, HTML5, CSS3        |
+| Auth          | `werkzeug.security` (bcrypt) |
+| UI Components | Bootstrap (modals/forms)   |
 
 ---
 
-## 🧬 Database Schema
+## 🧬 Database Schema Overview
 
-The system is built on a relational schema as follows:
+- **User**
+  - `id`, `username`, `password`, `is_admin`, `scores[]`
+- **Subject**
+  - `id`, `name`, `description`, `chapters[]`
+- **Chapter**
+  - `id`, `name`, `subject_id`, `quizzes[]`
+- **Quiz**
+  - `id`, `title`, `date_of_quiz`, `time_duration`, `chapter_id`, `questions[]`, `scores[]`
+- **Question**
+  - `id`, `question_statement`, `option1-4`, `correct_option`, `quiz_id`
+- **Score**
+  - `id`, `user_id`, `quiz_id`, `score`, `total_questions`, `timestamp`
 
-```mermaid
+> Relationships use SQLAlchemy backrefs with cascade deletes for integrity.
 
-# MAD_1
+---
 
-## 📈 Dashboard Preview (Admin)
-https://i.ibb.co/rGkL5YzR/Untitled-diagram-2025-04-22-071529.png
-+-------------------------------------------------------------+
-|                   Admin Dashboard                           |
-+----------------+----------------+----------------+----------+
-| Subjects Count | Chapters Count | Quizzes Count  | Questions|
-+----------------+----------------+----------------+----------+
-|       8        |       24       |       42       |   210    |
-+-------------------------------------------------------------+
-| Top Users (Avg. Score %)                                     |
-| - John Doe (82.4%)                                           |
-| - Jane Smith (79.3%)                                         |
-+-------------------------------------------------------------+
+## 🖥️ System Flow
 
-## 📋 How to Run
+```plaintext
+Admin:
+  Create Subject → Add Chapter → Add Quiz → Add Questions
+User:
+  Browse → Attempt Quiz → View Results & Past Scores
 
-# Clone the repository
+
+⚙️ Installation Guide
+🐍 Prerequisites
+Python 3.8+
+
+pip
+
+📦 Setup
+bash
+Copy
+Edit
+# Clone the repo
 git clone https://github.com/yourusername/quiz-master.git
 cd quiz-master
 
-# Set up virtual environment (optional)
+# Optional: Create virtual environment
 python -m venv venv
-source venv/bin/activate  # or venv\Scripts\activate on Windows
+source venv/bin/activate  # Windows: venv\Scripts\activate
 
 # Install dependencies
 pip install -r requirements.txt
 
-# Run the app
+# Initialize DB and admin user
 python app.py
+First run will automatically create an admin user with:
+
+Username: admin
+
+Password: 0000
+
+🔐 Security
+Password hashing: bcrypt via werkzeug.security
+
+Session protection with Flask’s session object
+
+Role-based access control (admin/user)
+
+👨‍💻 Developer Notes
+Structure
+sql
+Copy
+Edit
+📁 templates/
+   ├─ admin/
+   ├─ user/
+📁 static/
+app.py
+README.md
+requirements.txt
+Development Server
+bash
+Copy
+Edit
+python app.py
+Default runs at http://127.0.0.1:5000
+
+🤝 Contributing
+Fork the repo
+
+Create a branch: git checkout -b feature-x
+
+Commit changes: git commit -m 'Add feature x'
+
+Push: git push origin feature-x
+
+Open a Pull Request
+
+🧪 Future Improvements
+Quiz timer with countdown
+
+Markdown or image support in questions
+
+CSV import/export for bulk quiz management
+
+REST API for external integrations
+
+Analytics dashboard with charts
+
+📃 License
+MIT License © 2025 Your Name
+
+Made with ❤️ using Flask.
+
+yaml
+Copy
+Edit
+
+---
+
+Would you like me to save this as a file and send it to you?
