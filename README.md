@@ -73,8 +73,11 @@ User:
 ```
 ##  📦 Setup
 # Clone the repo
-git clone https://github.com/yourusername/quiz-master.git
-cd quiz-master
+
+```plaintext
+- git clone https://github.com/yourusername/quiz-master.git
+- cd quiz-master
+```
 
 # Optional: Create virtual environment
 
