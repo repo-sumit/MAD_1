@@ -77,16 +77,24 @@ git clone https://github.com/yourusername/quiz-master.git
 cd quiz-master
 
 # Optional: Create virtual environment
-python -m venv venv
-source venv/bin/activate  
 
+```plaintext
+-  python -m venv venv
+-  source venv/bin/activate
+```
 # Windows: venv\Scripts\activate
 
 # Install dependencies
-pip install -r requirements.txt
+
+```plaintext
+-  pip install -r requirements.txt
+```
 
 # Initialize DB and admin user
-python app.py
+```plaintext
+-  python app.py
+```
+
 First run will automatically create an admin user with:
 
 - Username: admin
@@ -112,9 +120,10 @@ sql
 - 
 ## Development Server
 
+```plaintext
 - python app.py
 - Default runs at http://127.0.0.1:5000
-
+```
 
 📃 License
 MIT License © 2025 Sumit
