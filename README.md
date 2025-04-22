@@ -87,16 +87,16 @@ pip install -r requirements.txt
 python app.py
 First run will automatically create an admin user with:
 
-Username: admin
-Password: 0000
+- Username: admin
+- Password: 0000
 
-🔐 Security
+# 🔐 Security
 Password hashing: bcrypt via werkzeug.security
 Session protection with Flask’s session object
 
 Role-based access control (admin/user)
 
-👨‍💻 Developer Notes
+## 👨‍💻 Developer Notes
 Structure
 sql
 
@@ -104,43 +104,20 @@ sql
    ├─ admin/
    ├─ user/
 📁 static/
-app.py
-README.md
-requirements.txt
-Development Server
+- app.py
+- README.md
+- requirements.txt
+- 
+## Development Server
 
-python app.py
-Default runs at http://127.0.0.1:5000
+- python app.py
+- Default runs at http://127.0.0.1:5000
 
-🤝 Contributing
-Fork the repo
-
-Create a branch: git checkout -b feature-x
-
-Commit changes: git commit -m 'Add feature x'
-
-Push: git push origin feature-x
-
-Open a Pull Request
-
-🧪 Future Improvements
-Quiz timer with countdown
-
-Markdown or image support in questions
-
-CSV import/export for bulk quiz management
-
-REST API for external integrations
-
-Analytics dashboard with charts
 
 📃 License
 MIT License © 2025 Your Name
 
 Made with ❤️ using Flask.
-
-yaml
-
 
 ---
 
