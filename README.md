@@ -2,8 +2,6 @@
 
 Quiz Master is a robust full-stack **Flask** web application designed for educational institutions and e-learning platforms to create, manage, and evaluate quizzes with hierarchical structuring by **Subjects → Chapters → Quizzes → Questions**.
 
-![Admin Dashboard](https://i.ibb.co/rGkL5YzR/Untitled-diagram-2025-04-22-071529.png)
-
 ---
 
 ## 🚀 Key Features
