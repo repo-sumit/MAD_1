@@ -78,7 +78,9 @@ cd quiz-master
 
 # Optional: Create virtual environment
 python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
+source venv/bin/activate  
+
+# Windows: venv\Scripts\activate
 
 # Install dependencies
 pip install -r requirements.txt
@@ -91,8 +93,8 @@ First run will automatically create an admin user with:
 - Password: 0000
 
 # 🔐 Security
-Password hashing: bcrypt via werkzeug.security
-Session protection with Flask’s session object
+- Password hashing: bcrypt via werkzeug.security
+- Session protection with Flask’s session object
 
 Role-based access control (admin/user)
 
@@ -115,9 +117,9 @@ sql
 
 
 📃 License
-MIT License © 2025 Your Name
+MIT License © 2025 Sumit
 
-Made with ❤️ using Flask.
+Made with ❤️ using Flask (Python).
 
 ---
 
