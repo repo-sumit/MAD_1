@@ -118,7 +118,7 @@ sql
 - app.py
 - README.md
 - requirements.txt
-- 
+
 ## Development Server
 
 ```plaintext
