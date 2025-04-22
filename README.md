@@ -68,14 +68,10 @@ User:
 # 🐍 Prerequisites
 ```plaintext
 
-Python 3.8+
-
-pip
-
-📦 Setup
-bash
-Copy
-Edit
+-  Python 3.8+
+-  pip
+```
+##  📦 Setup
 # Clone the repo
 git clone https://github.com/yourusername/quiz-master.git
 cd quiz-master
@@ -92,12 +88,10 @@ python app.py
 First run will automatically create an admin user with:
 
 Username: admin
-
 Password: 0000
 
 🔐 Security
 Password hashing: bcrypt via werkzeug.security
-
 Session protection with Flask’s session object
 
 Role-based access control (admin/user)
@@ -105,8 +99,7 @@ Role-based access control (admin/user)
 👨‍💻 Developer Notes
 Structure
 sql
-Copy
-Edit
+
 📁 templates/
    ├─ admin/
    ├─ user/
@@ -115,9 +108,7 @@ app.py
 README.md
 requirements.txt
 Development Server
-bash
-Copy
-Edit
+
 python app.py
 Default runs at http://127.0.0.1:5000
 
@@ -149,8 +140,7 @@ MIT License © 2025 Your Name
 Made with ❤️ using Flask.
 
 yaml
-Copy
-Edit
+
 
 ---
 
