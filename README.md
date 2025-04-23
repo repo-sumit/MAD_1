@@ -14,7 +14,6 @@ Quiz Master is a robust full-stack **Flask** web application designed for educat
   - Questions
 - Dynamic dashboard with:
   - Quiz statistics
-  - Top user performance
 - Modal-based entity creation (without page reloads)
 
 ### 👨‍🎓 User Portal
