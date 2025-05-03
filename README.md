@@ -128,11 +128,6 @@ sql
 - Default runs at http://127.0.0.1:5000
 ```
 
-📃 License
-MIT License © 2025 Sumit
 
 Made with ❤️ using Flask (Python).
 
----
-
-Would you like me to save this as a file and send it to you?
