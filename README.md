@@ -6,17 +6,6 @@
 
 **QuizMaster** is a structured and user-friendly educational assessment app developed using **Flask**. It allows:
 
-👨‍🏫 **Admins** to:
-- Create Subjects → Chapters → Quizzes → Questions
-- Monitor and analyze user scores
-
-🎓 **Students** to:
-- Register/Login
-- Attempt MCQ-based quizzes
-- View results and track learning progress
-
-🌐 The app ensures real-time feedback and performance insights, aiding both teaching and learning.
-
 ---
 
 ## 🚀 Key Features
@@ -36,6 +25,8 @@
 - Explore subjects and quizzes
 - Attempt quizzes with auto-scoring
 - View **historical performance** and quiz attempts
+
+🌐 The app ensures real-time feedback and performance insights, aiding both teaching and learning.
 
 ---
 
