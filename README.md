@@ -1,6 +1,21 @@
 # 🎓 Quiz Master - Modular Quiz Management System
 
-Quiz Master is a robust full-stack **Flask** web application designed for educational institutions and e-learning platforms to create, manage, and evaluate quizzes with hierarchical structuring by **Subjects → Chapters → Quizzes → Questions**.
+![QuizMaster Banner](https://img.shields.io/badge/Flask-App-blue?style=for-the-badge&logo=flask)
+
+## 📖 Overview
+
+**QuizMaster** is a structured and user-friendly educational assessment app developed using **Flask**. It allows:
+
+👨‍🏫 **Admins** to:
+- Create Subjects → Chapters → Quizzes → Questions
+- Monitor and analyze user scores
+
+🎓 **Students** to:
+- Register/Login
+- Attempt MCQ-based quizzes
+- View results and track learning progress
+
+🌐 The app ensures real-time feedback and performance insights, aiding both teaching and learning.
 
 ---
 
@@ -26,16 +41,28 @@ Quiz Master is a robust full-stack **Flask** web application designed for educat
 
 ## 🧰 Tech Stack
 
-| Layer         | Technology                 |
-|--------------|----------------------------|
-| Backend       | Python + Flask             |
-| ORM & DB      | SQLAlchemy + SQLite3       |
-| Templates     | Jinja2, HTML5, CSS3        |
-| Auth          | `werkzeug.security` (bcrypt) |
-| UI Components | Bootstrap (modals/forms)   |
+| Layer           | Technologies Used |
+|----------------|-------------------|
+| 🖥️ Frontend    | HTML5, CSS3, Bootstrap, Jinja2 |
+| ⚙️ Backend     | Flask, Flask-SQLAlchemy, Werkzeug |
+| 💾 Database    | SQLite |
+| 🛡️ Security    | Password Hashing & Role-Based Access |
+| 🔐 Session     | Flask Sessions for Auth & State |
 
 ---
+## 🏗️ Architecture
 
+```text
+📦 QuizMaster/
+ ┣ 📜 app.py              # Core app file with routes & logic
+ ┣ 📜 requirements.txt    # Python dependencies
+ ┣ 📜 README.md           # Project documentation
+ ┣ 📂 instance/           # SQLite database
+ ┣ 📂 templates/
+ ┃ ┣ 📂 admin/            # Admin interface templates
+ ┃ ┗ 📂 user/             # User interface templates
+ ┣ 📂 static/             # CSS, JS, images
+```
 ## 🧬 Database Schema Overview
 
 - **User**
