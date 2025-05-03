@@ -61,7 +61,7 @@
  ┣ 📂 templates/
  ┃ ┣ 📂 admin/            # Admin interface templates
  ┃ ┗ 📂 user/             # User interface templates
- ┣ 📂 static/             # CSS, JS, images
+ ┣ 📂 static/             # CSS, images
 ```
 ## 🧬 Database Schema Overview
 
