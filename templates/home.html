@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8 text-center">
+        <h1 class="display-4 mb-4">Welcome to <span class="text-primary">Quiz Master</span></h1>
+        <p class="lead mb-5">
+            Test your knowledge and prepare for exams with our comprehensive quiz platform.
+            Choose from various subjects and chapters to begin your learning journey.
+        </p>
+        
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h3 class="card-title">For Students</h3>
+                        <p class="card-text">
+                            Take quizzes, track your progress, and improve your knowledge.
+                        </p>
+                        <a href="/register" class="btn btn-primary">Register Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h3 class="card-title">Already Registered?</h3>
+                        <p class="card-text">
+                            Access your dashboard and continue your learning journey.
+                        </p>
+                        <a href="/login" class="btn btn-primary">Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
