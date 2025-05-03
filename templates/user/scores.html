@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}My Scores{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">My Quiz Attempts</h1>
+        <a href="/user/dashboard" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </a>
+    </div>
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Quiz History</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Quiz</th>
+                            <th>Chapter</th>
+                            <th>Subject</th>
+                            <th>Score</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for score in scores %}
+                        <tr>
+                            <td>{{ score.quiz.title }}</td>
+                            <td>{{ score.quiz.chapter.name }}</td>
+                            <td>{{ score.quiz.chapter.subject.name }}</td>
+                            <td>
+                                <span class="{% if score.score/score.total_questions >= 0.7 %}text-success{% else %}text-danger{% endif %}">
+                                    {{ score.score }}/{{ score.total_questions }}
+                                </span>
+                            </td>
+                            <td>{{ score.timestamp.strftime('%Y-%m-%d %H:%M') }}</td>
+                            <td>
+                                <a href="/user/quiz/{{ score.quiz.id }}/result?attempt={{ score.id }}" class="btn btn-sm btn-info">
+                                    <i class="fas fa-eye"></i> View
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

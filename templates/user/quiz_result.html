@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+
+{% block title %}{{ quiz.title }} - Results{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">
+            <a href="/user/chapter/{{ quiz.chapter.id }}" class="text-primary">{{ quiz.chapter.subject.name }}</a> /
+            <a href="/user/chapter/{{ quiz.chapter.id }}" class="text-success">{{ quiz.chapter.name }}</a> /
+            {{ quiz.title }} - Results
+        </h1>
+        <a href="/user/chapter/{{ quiz.chapter.id }}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Back to Chapter
+        </a>
+    </div>
+    
+    {% if score.total_questions == 0 %}
+    <div class="alert alert-warning">
+        This quiz had no questions to score.
+    </div>
+    {% else %}
+    {% endif %}
+    <div class="row">
+        <div class="col-lg-6">
+            <!-- Score Card -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 bg-primary text-white">
+                    <h6 class="m-0 font-weight-bold">Your Score</h6>
+                </div>
+                <div class="card-body text-center">
+                    <div
+                        class="display-4 font-weight-bold {% if score.score/score.total_questions >= 0.7 %}text-success{% else %}text-danger{% endif %}">
+                        {{ score.score }}/{{ score.total_questions }}
+                    </div>
+                    <div class="mt-3">
+                        {% if score.score/score.total_questions >= 0.7 %}
+                        <span class="badge bg-success">Passed</span>
+                        {% else %}
+                        <span class="badge bg-danger">Failed</span>
+                        {% endif %}
+                        <p class="mt-2">Attempted on: {{ score.timestamp.strftime('%Y-%m-%d %H:%M') }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <!-- Performance Summary -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 bg-info text-white">
+                    <h6 class="m-0 font-weight-bold">Performance Summary</h6>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <h6>Percentage: {{ "%.2f"|format((score.score/score.total_questions)*100) }}%</h6>
+                        <div class="progress">
+                            <div class="progress-bar {% if score.score/score.total_questions >= 0.7 %}bg-success{% else %}bg-danger{% endif %}"
+                                role="progressbar" style="width: {{ "
+                                %.2f"|format((score.score/score.total_questions)*100) }}%" aria-valuenow="{{ "
+                                %.2f"|format((score.score/score.total_questions)*100) }}" aria-valuemin="0"
+                                aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <a href="/user/scores" class="btn btn-primary">
+                            <i class="fas fa-history"></i> View All Attempts
+                        </a>
+                        <a href="/user/quiz/{{ quiz.id }}" class="btn btn-secondary">
+                            <i class="fas fa-redo"></i> Try Again
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Question Review -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Question Review</h6>
+        </div>
+        <div class="card-body">
+            {% for question in quiz.questions %}
+            <div
+                class="mb-4 p-3 {% if user_answers.get(question.id|string) == question.correct_option|string %}bg-success bg-opacity-10{% else %}bg-danger bg-opacity-10{% endif %}">
+                <h6>Question {{ loop.index }}: {{ question.question_statement }}</h6>
+                <div class="mb-2">
+                    <div
+                        class="form-check {% if question.correct_option == 1 %}text-success font-weight-bold{% endif %}">
+                        <input class="form-check-input" type="radio" disabled {% if
+                            user_answers.get(question.id|string)=='1' %}checked{% endif %}>
+                        <label class="form-check-label">
+                            {{ question.option1 }}
+                            {% if question.correct_option == 1 %}(Correct){% endif %}
+                        </label>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <div
+                        class="form-check {% if question.correct_option == 2 %}text-success font-weight-bold{% endif %}">
+                        <input class="form-check-input" type="radio" disabled {% if
+                            user_answers.get(question.id|string)=='2' %}checked{% endif %}>
+                        <label class="form-check-label">
+                            {{ question.option2 }}
+                            {% if question.correct_option == 2 %}(Correct){% endif %}
+                        </label>
+                    </div>
+                </div>
+                {% if question.option3 %}
+                <div class="mb-2">
+                    <div
+                        class="form-check {% if question.correct_option == 3 %}text-success font-weight-bold{% endif %}">
+                        <input class="form-check-input" type="radio" disabled {% if
+                            user_answers.get(question.id|string)=='3' %}checked{% endif %}>
+                        <label class="form-check-label">
+                            {{ question.option3 }}
+                            {% if question.correct_option == 3 %}(Correct){% endif %}
+                        </label>
+                    </div>
+                </div>
+                {% endif %}
+                {% if question.option4 %}
+                <div class="mb-2">
+                    <div
+                        class="form-check {% if question.correct_option == 4 %}text-success font-weight-bold{% endif %}">
+                        <input class="form-check-input" type="radio" disabled {% if
+                            user_answers.get(question.id|string)=='4' %}checked{% endif %}>
+                        <label class="form-check-label">
+                            {{ question.option4 }}
+                            {% if question.correct_option == 4 %}(Correct){% endif %}
+                        </label>
+                    </div>
+                </div>
+                {% endif %}
+                {% if user_answers.get(question.id|string) == question.correct_option|string %}
+                <div class="text-success mt-2"><i class="fas fa-check"></i> You answered correctly!</div>
+                {% else %}
+                <div class="text-danger mt-2"><i class="fas fa-times"></i> Your answer was incorrect</div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

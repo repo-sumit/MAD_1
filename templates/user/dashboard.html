@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+
+{% block title %}User Dashboard{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Welcome, {{ user.full_name }}</h1>
+        <div>
+            <form class="d-inline" method="GET" action="/user/dashboard">
+                <div class="input-group">
+                    <input type="text" class="form-control" name="q" placeholder="Search..." value="{{ query }}">
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </form>
+            <a href="/logout" class="btn btn-secondary ml-2">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        </div>
+    </div>
+
+    <!-- Score Summary -->
+    <div class="row">
+        <div class="col-xl-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Quiz Attempts</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                {{ total_attempts }}
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Average Score</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                {{ "%.2f"|format(avg_score) }}%
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-chart-line fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search Results or Normal View -->
+    {% if query %}
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Search Results for "{{ query }}"</h6>
+        </div>
+        <div class="card-body">
+            {% if subjects or chapters or quizzes %}
+            <!-- Subjects Results -->
+            {% if subjects %}
+            <h5>Subjects</h5>
+            <div class="row">
+                {% for subject in subjects %}
+                <div class="col-lg-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ subject.name }}</h5>
+                            <p class="card-text">{{ subject.description|truncate(100) }}</p>
+                            <a href="/user/subject/{{ subject.id }}" class="btn btn-primary">
+                                View Chapters
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- Chapters Results -->
+            {% if chapters %}
+            <h5 class="mt-4">Chapters</h5>
+            <div class="list-group">
+                {% for chapter in chapters %}
+                <a href="/user/chapter/{{ chapter.id }}" class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h6 class="mb-1">{{ chapter.name }}</h6>
+                        <small>{{ chapter.subject.name }}</small>
+                    </div>
+                    <p class="mb-1">{{ chapter.description|truncate(100) }}</p>
+                </a>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- Quizzes Results -->
+            {% if quizzes %}
+            <h5 class="mt-4">Quizzes</h5>
+            <div class="list-group">
+                {% for quiz in quizzes %}
+                <a href="/user/quiz/{{ quiz.id }}" class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h6 class="mb-1">{{ quiz.title }}</h6>
+                        <small>{{ quiz.chapter.subject.name }} / {{ quiz.chapter.name }}</small>
+                    </div>
+                    <p class="mb-1">{{ quiz.remarks|truncate(100) }}</p>
+                    <small>Duration: {{ quiz.time_duration }}</small>
+                </a>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% else %}
+            <div class="alert alert-info">
+                No results found for "{{ query }}"
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% else %}
+    <!-- Normal Subjects List -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Available Subjects</h6>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                {% for subject in subjects %}
+                <div class="col-lg-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ subject.name }}</h5>
+                            <p class="card-text">{{ subject.description|truncate(100) }}</p>
+                            <a href="/user/subject/{{ subject.id }}" class="btn btn-primary">
+                                View Chapters
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

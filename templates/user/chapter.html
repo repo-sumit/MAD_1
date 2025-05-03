@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}{{ chapter.name }} - Quizzes{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">
+            <a href="/user/subject/{{ chapter.subject.id }}" class="text-primary">{{ chapter.subject.name }}</a> / 
+            {{ chapter.name }}
+        </h1>
+        <a href="/user/subject/{{ chapter.subject.id }}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Back to Subject
+        </a>
+    </div>
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Available Quizzes</h6>
+        </div>
+        <div class="card-body">
+            <div class="list-group">
+                {% for quiz in chapter.quizzes %}
+                <div class="list-group-item">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">{{ quiz.title }}</h5>
+                        <small>Duration: {{ quiz.time_duration }}</small>
+                    </div>
+                    <p class="mb-1">{{ quiz.remarks }}</p>
+                    <div class="d-flex justify-content-between align-items-center mt-2">
+                        <small>Date: {{ quiz.date_of_quiz }}</small>
+                        <a href="/user/quiz/{{ quiz.id }}" class="btn btn-sm btn-primary">
+                            Take Quiz
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
