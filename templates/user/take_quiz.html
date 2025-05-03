@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}{{ quiz.title }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .quiz-timer {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #e74a3b;
+    }
+    .question-card {
+        border-left: 4px solid #4e73df;
+        margin-bottom: 20px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">
+            <a href="/user/chapter/{{ quiz.chapter.id }}" class="text-primary">{{ quiz.chapter.subject.name }}</a> / 
+            <a href="/user/chapter/{{ quiz.chapter.id }}" class="text-success">{{ quiz.chapter.name }}</a> / 
+            {{ quiz.title }}
+        </h1>
+        <div class="quiz-timer">
+            <i class="fas fa-clock"></i> Time: {{ quiz.time_duration }}
+        </div>
+    </div>
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 bg-primary text-white">
+            <h6 class="m-0 font-weight-bold">Quiz Instructions</h6>
+        </div>
+        <div class="card-body">
+            <p>Please answer all questions. Each question has only one correct answer.</p>
+            <p>Time Duration: {{ quiz.time_duration }}</p>
+            {% if quiz.remarks %}
+            <div class="alert alert-info">
+                {{ quiz.remarks }}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <form method="POST" action="/user/quiz/{{ quiz.id }}">
+        {% for question in quiz.questions %}
+        <div class="card question-card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Question {{ loop.index }}</h6>
+            </div>
+            <div class="card-body">
+                <p class="font-weight-bold">{{ question.question_statement }}</p>
+                <div class="form-group">
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="radio" name="question_{{ question.id }}" id="q{{ question.id }}_option1" value="1" required>
+                        <label class="form-check-label" for="q{{ question.id }}_option1">
+                            {{ question.option1 }}
+                        </label>
+                    </div>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="radio" name="question_{{ question.id }}" id="q{{ question.id }}_option2" value="2">
+                        <label class="form-check-label" for="q{{ question.id }}_option2">
+                            {{ question.option2 }}
+                        </label>
+                    </div>
+                    {% if question.option3 %}
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="radio" name="question_{{ question.id }}" id="q{{ question.id }}_option3" value="3">
+                        <label class="form-check-label" for="q{{ question.id }}_option3">
+                            {{ question.option3 }}
+                        </label>
+                    </div>
+                    {% endif %}
+                    {% if question.option4 %}
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="radio" name="question_{{ question.id }}" id="q{{ question.id }}_option4" value="4">
+                        <label class="form-check-label" for="q{{ question.id }}_option4">
+                            {{ question.option4 }}
+                        </label>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+        <div class="text-center mt-4 mb-5">
+            <button type="submit" class="btn btn-primary btn-lg">
+                <i class="fas fa-paper-plane"></i> Submit Quiz
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}
