@@ -1,0 +1,193 @@
+{% extends "base.html" %}
+
+{% block title %}{{ chapter.name }} - Quizzes{% endblock %}
+
+{% block extra_css %}
+<style>
+    .admin-nav {
+        background-color: #343a40 !important;
+    }
+    .quiz-card {
+        border-left: 4px solid #f6c23e;
+    }
+    .question-item {
+        border-left: 4px solid #36b9cc;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">
+            <a href="/admin/subject/{{ chapter.subject_id }}" class="text-primary">{{ chapter.subject.name }}</a> / 
+            {{ chapter.name }}
+        </h1>
+        <div>
+            <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#editChapterModal">
+                <i class="fas fa-edit"></i> Edit Chapter
+            </button>
+            <a href="/admin/subject/{{ chapter.subject_id }}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Back to Chapters
+            </a>
+        </div>
+    </div>
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-success">Chapter Details</h6>
+        </div>
+        <div class="card-body">
+            <p>{{ chapter.description }}</p>
+            
+            <!-- Quizzes List -->
+            <div class="mt-4">
+                <h5 class="font-weight-bold">Quizzes</h5>
+                {% for quiz in chapter.quizzes %}
+                <div class="card quiz-card mb-3">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="font-weight-bold text-warning">{{ quiz.title }}</h6>
+                                <small class="text-muted">
+                                    Date: {{ quiz.date_of_quiz }} | Duration: {{ quiz.time_duration }}
+                                </small>
+                                {% if quiz.remarks %}
+                                <p class="mt-2 mb-0"><small>{{ quiz.remarks }}</small></p>
+                                {% endif %}
+                            </div>
+                            <div>
+                                <a href="/admin/quiz/{{ quiz.id }}" class="btn btn-sm btn-warning">
+                                    <i class="fas fa-eye"></i> View
+                                </a>
+                                <button class="btn btn-sm btn-info" data-bs-toggle="modal" 
+                                        data-bs-target="#editQuizModal{{ quiz.id }}">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <form action="/admin/quiz/{{ quiz.id }}/delete" method="POST" class="d-inline">
+                                    <button type="submit" class="btn btn-sm btn-danger">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                
+                <!-- Add Quiz Button -->
+                <button class="btn btn-warning mt-2" data-bs-toggle="modal" data-bs-target="#createQuizModal">
+                    <i class="fas fa-plus"></i> Add Quiz
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Create Quiz Modal -->
+<div class="modal fade" id="createQuizModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add New Quiz</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" action="/admin/chapter/{{ chapter.id }}">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Quiz Title</label>
+                        <input type="text" class="form-control" name="title" required>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Date</label>
+                            <input type="date" class="form-control" name="date_of_quiz" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Duration (HH:MM)</label>
+                            <input type="text" class="form-control" name="time_duration" placeholder="00:30" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Remarks</label>
+                        <textarea class="form-control" name="remarks" rows="2"></textarea>
+                    </div>
+                    <input type="hidden" name="create_quiz" value="1">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Create Quiz</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Chapter Modal -->
+<div class="modal fade" id="editChapterModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Chapter</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" action="/admin/chapter/{{ chapter.id }}/edit">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Chapter Name</label>
+                        <input type="text" class="form-control" name="name" value="{{ chapter.name }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-control" name="description" rows="3">{{ chapter.description }}</textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Quiz Modals (one for each quiz) -->
+{% for quiz in chapter.quizzes %}
+<div class="modal fade" id="editQuizModal{{ quiz.id }}" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Quiz</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" action="/admin/quiz/{{ quiz.id }}/edit">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Quiz Title</label>
+                        <input type="text" class="form-control" name="title" value="{{ quiz.title }}" required>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Date</label>
+                            <input type="date" class="form-control" name="date_of_quiz" value="{{ quiz.date_of_quiz }}" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Duration (HH:MM)</label>
+                            <input type="text" class="form-control" name="time_duration" value="{{ quiz.time_duration }}" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Remarks</label>
+                        <textarea class="form-control" name="remarks" rows="2">{{ quiz.remarks }}</textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

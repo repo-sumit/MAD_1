@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+
+{% block title %}{{ subject.name }} - Chapters{% endblock %}
+
+{% block extra_css %}
+<style>
+    .admin-nav {
+        background-color: #343a40 !important;
+    }
+    .chapter-card {
+        border-left: 4px solid #1cc88a;
+    }
+    .quiz-card {
+        border-left: 4px solid #f6c23e;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">{{ subject.name }}</h1>
+        <div>
+            <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#editSubjectModal">
+                <i class="fas fa-edit"></i> Edit Subject
+            </button>
+            <a href="/admin/dashboard" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Back to Subjects
+            </a>
+        </div>
+    </div>
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex justify-content-between align-items-center">
+            <h6 class="m-0 font-weight-bold text-primary">Subject Details</h6>
+            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createChapterModal">
+                <i class="fas fa-plus"></i> Add Chapter
+            </button>
+        </div>
+        <div class="card-body">
+            <p>{{ subject.description }}</p>
+            
+            <!-- Chapters List -->
+            <div class="mt-4">
+                <h5 class="font-weight-bold">Chapters</h5>
+                {% for chapter in chapters %}
+                <div class="card chapter-card mb-3">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="font-weight-bold text-success">{{ chapter.name }}</h6>
+                                <p class="mb-0">{{ chapter.description }}</p>
+                            </div>
+                            <div>
+                                <a href="/admin/chapter/{{ chapter.id }}" class="btn btn-sm btn-success">
+                                    <i class="fas fa-eye"></i> View
+                                </a>
+                                <button class="btn btn-sm btn-info" data-bs-toggle="modal" 
+                                        data-bs-target="#editChapterModal{{ chapter.id }}">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <form action="/admin/chapter/{{ chapter.id }}/delete" method="POST" class="d-inline">
+                                    <button type="submit" class="btn btn-sm btn-danger">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Create Chapter Modal -->
+<div class="modal fade" id="createChapterModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Chapter to {{ subject.name }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" action="/admin/subject/{{ subject.id }}">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Chapter Name</label>
+                        <input type="text" class="form-control" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-control" name="description" rows="3"></textarea>
+                    </div>
+                    <input type="hidden" name="create_chapter" value="1">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add Chapter</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Subject Modal -->
+<div class="modal fade" id="editSubjectModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Subject</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" action="/admin/subject/{{ subject.id }}/edit">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Subject Name</label>
+                        <input type="text" class="form-control" name="name" value="{{ subject.name }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-control" name="description" rows="3">{{ subject.description }}</textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Chapter Modals (one for each chapter) -->
+{% for chapter in chapters %}
+<div class="modal fade" id="editChapterModal{{ chapter.id }}" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Chapter</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" action="/admin/chapter/{{ chapter.id }}/edit">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Chapter Name</label>
+                        <input type="text" class="form-control" name="name" value="{{ chapter.name }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-control" name="description" rows="3">{{ chapter.description }}</textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}
